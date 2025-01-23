@@ -22,7 +22,7 @@ const VerifyAccount = () => {
 
     const onSubmit = async (data: z.infer<typeof verifySchema>) => {
         try {
-            const response = await axios.post<ApiResponse>(`/api/verify-code`, {
+            const response = await axios.post<ApiResponse>('/api/verify-code', {
                 username: params.username,
                 code: data.code
             })
