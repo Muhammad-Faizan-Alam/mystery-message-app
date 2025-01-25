@@ -5,7 +5,7 @@ export interface Message extends Document {
   content: string;
   createdAt: Date;
 }
-
+// message schema
 const MessageSchema: Schema<Message> = new mongoose.Schema({
   content: {
     type: String,
