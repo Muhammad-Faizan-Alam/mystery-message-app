@@ -150,7 +150,7 @@ export default function SignUpForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <Input {...field} />
-                  <p className="text-muted text-gray-400 text-sm">
+                  <p className="text-muted text-gray-800 text-sm">
                     We will send you a verification code.
                   </p>
                   <FormMessage />

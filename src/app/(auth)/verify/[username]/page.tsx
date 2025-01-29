@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { verifySchema } from '@/schemas/verifySchema';
@@ -64,9 +64,9 @@ const VerifyAccount = () => {
                                     <FormControl>
                                         <Input placeholder="code" {...field} />
                                     </FormControl>
-                                    {/* <FormDescription>
-                                        This is your public display name.
-                                    </FormDescription> */}
+                                    <FormDescription>
+                                        After 1 hour your OTP (sent to yuor Email) will expire and no resend option. Please follow our privacy policy and use key within 60 minutes.
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}

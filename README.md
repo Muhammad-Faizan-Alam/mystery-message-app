@@ -1,3 +1,16 @@
+🚀 Feedback System App – Gather Honest Reviews with Privacy!
+
+This app allows users to sign up with their Gmail account, after which they receive a one-time password (OTP) via email for verification. Once verified, users get a public link that they can share to collect anonymous feedback or reviews.
+
+🔹 Key Features:
+✅ Secure Sign-up & OTP Verification via email.
+✅ Anonymous Feedback – Users can receive honest opinions while ensuring the sender's identity remains private.
+✅ Real-time Dashboard – Feedback messages are displayed with date & time, but without sender details for privacy.
+✅ User Authentication – Users can log out anytime and easily sign back in.
+
+This app is designed to help individuals, professionals, and businesses collect genuine feedback without concerns about privacy.
+
+
 zod library
     Zod is a TypeScript-first schema (A schema is a structured framework or blueprint that defines the shape, structure, and validation rules for data. It ensures data consistency and integrity by specifying required fields, data types, and constraints) declaration and validation library that enables developers to define data schemas and validate them at runtime with ease. It allows you to create strict or flexible validation rules for objects, arrays, strings, numbers, and other data types, ensuring the data meets the expected structure before being processed in your application. Zod is highly versatile, offering seamless integration with TypeScript for type inference, making it ideal for ensuring type safety. Its use cases include form validation, API data validation, and ensuring consistent data handling across applications. Zod's simplicity, declarative syntax, and compatibility with modern JavaScript frameworks make it a popular choice for validating dynamic data in both frontend and backend projects.
 
