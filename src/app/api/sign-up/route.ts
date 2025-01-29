@@ -1,9 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import User from "@/model/User";
 import bcrypt from "bcryptjs";
-
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
-import UserModel from "@/model/User";
 
 export async function POST(request: Request) {
     await dbConnect();
@@ -11,37 +9,33 @@ export async function POST(request: Request) {
     try {
         const { username, email, password } = await request.json();
         
-        const existingUserVerifiedByUsername = await UserModel.findOne({
-            username,
-            isVerified: true
-        })
+        const existingUserVerifiedByUsername = await User.findOne({ username, isVerified: true });
 
         if (existingUserVerifiedByUsername) {
-            return Response.json({
-                success: false,
-                message: 'Username already taken',
-            }, { status: 400 });
+            return new Response(JSON.stringify({ success: false, message: 'Username already taken' }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" }
+            });
         }
 
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
-        const existingUserVerifiedByEmail = await UserModel.findOne({email});
+        const existingUserVerifiedByEmail = await User.findOne({ email });
+
         if (existingUserVerifiedByEmail) {
-            if(existingUserVerifiedByEmail.isVerified) {
-            return Response.json({
-                success: false,
-                message: 'Email already taken',
-            }, { status: 400 });
+            if (existingUserVerifiedByEmail.isVerified) {
+                return new Response(JSON.stringify({ success: false, message: 'Email already taken' }), {
+                    status: 400,
+                    headers: { "Content-Type": "application/json" }
+                });
             } else {
-                const hashedPassword = await bcrypt.hash(password, 10);
-                existingUserVerifiedByEmail.password = hashedPassword;
+                existingUserVerifiedByEmail.password = await bcrypt.hash(password, 10);
                 existingUserVerifiedByEmail.verifyCode = verifyCode;
                 existingUserVerifiedByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000);
                 await existingUserVerifiedByEmail.save();
             }
         } else {
             const hashedPassword = await bcrypt.hash(password, 10);
-            const expiryDate = new Date();
-            expiryDate.setHours(expiryDate.getHours() + 1);
+            const expiryDate = new Date(Date.now() + 3600000);
 
             const user = new User({
                 username,
@@ -57,30 +51,26 @@ export async function POST(request: Request) {
             await user.save();
         }
 
-        // send verification email
         const emailResponse = await sendVerificationEmail(email, username, verifyCode);
+        console.log("Email response:", emailResponse);
 
         if (emailResponse.success) {
-            return Response.json({
-                success: true,
-                message: 'User registered successfully',
-            }, { status: 201 });
+            return new Response(JSON.stringify({ success: true, message: 'User registered successfully' }), {
+                status: 201,
+                headers: { "Content-Type": "application/json" }
+            });
         } else {
-            return Response.json({
-                success: false,
-                message: emailResponse.message,
-            }, { status: 500 });
+            return new Response(JSON.stringify({ success: false, message: emailResponse.message }), {
+                status: 500,
+                headers: { "Content-Type": "application/json" }
+            });
         }
 
     } catch (error) {
-        console.error('Error registring user', error);
-        return Response.json({
-            success: false,
-            message: 'Error registring user',
-        },
-        {
-            status: 500
-        }
-    );
+        console.error('Error registering user:', error);
+        return new Response(JSON.stringify({ success: false, message: 'Error registering user' }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" }
+        });
     }
 }
